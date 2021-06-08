@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {margin: 0; padding: 0;}
+        body {
+            background: linear-gradient(to left, #93a5cf, #e4efe9);
+        }
+        .container {
+            width: 60vw;
+            margin: 100px auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.3);
+        }
+        .input_text {
+            padding-bottom: 10px;
+            width: 100%;
+            border: 0;
+            outline: none;
+            border-bottom: 2px solid #636363;
+            background: none;
+        }
+        h3 {
+            color: #636363;
+            margin: 10px 0;
+        }
+        .task {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.5);
+            padding: 18px;
+            margin-bottom: 6px;
+            box-sizing: border-box;
+            transition : 0.5s;
+            opacity: 1;
+        }
+        .task i {
+            float: right;
+            margin-left: 20px;
+            cursor: pointer;
+        }
+        .todo {
+            transition: 0.5s;
+        }
+        .completed {
+            border-top: 2px dotted #636363;
+            transition : 0.5s;
+        }
+        .completed .task {
+            background: rgba(0, 0, 0 , 0.5);
+            color: #fff;
+        }
+    </style>
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <!-- jQuery -->
+    <script src="jquery.min.js"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <input class="input_text" type="text" placeholder="내용을 입력해 주세요" />
+        <div class="todo">
+            <h3><i class="far fa-check-square"></i> 할 일 목록</h3>
+        </div>
+        <div class="completed">
+            <h3><i class="fas fa-check-square"></i> 완료 목록</h3>
+        </div>
+        <script>
+            let taskHeight = 0;
+            let completedHeight = $('.completed > h3').outerHeight(true);
+            let todoHeight = $('.todo > h3').outerHeight(true);
+            
+            $(".todo").css("height", todoHeight);
+            $(".completed").css("height", completedHeight);
+
+            
+
+            // 키보드 누르고 뗄 때 발생하는 이벤트 keyup
+            $(".input_text").on("keyup", function(e) {
+                // 이벤트가 발생되었을 때 자동으로 넘어오는 객체
+                // 해당 이벤트에 대한 정보가 담겨있음
+                // console.log(e.keyCode);
+                // 엔터키의 키코드는 13
+                // 사용자가 엔터키를 누른 상태이면서(&&) + 사용자가 입력한 값이 공백이 아닌 경우
+                let input_val = $(".input_text").val();
+                // let trashcan = $("<i class='fas fa-trash'></i>");
+                if (e.keyCode == 13 && input_val != "") {
+                    
+                    // 태그를 동적으로 생성하고 붙여줄 땐 $("html코드")으 형식으로 작성한다.
+
+                    // 만들어줄 목록을 생성
+                    let task = $("<div class='task yet'></div>").text(input_val);
+
+                    // 태그를 적절한 위치에 넣어주는 처리
+                    // append()
+                    $(".todo").append(task);
+                    
+                    taskHeight = $('.task').outerHeight(true);
+                    todoHeight += taskHeight;
+                    console.log(todoHeight, completedHeight);
+                    $(".todo").css("height", todoHeight);
+                    
+                    $("<i class='fas fa-trash'></i>").appendTo(task);
+                    $("<i class='far fa-check-circle'></i>").appendTo(task);
+                    $(".input_text").val('');
+                    
+                    
+                    
+                    $('.task:last-child > .fa-check-circle').on('click', function(e) {
+                        if ($(e.target).parent().hasClass("yet")) {
+                            todoHeight -= taskHeight;
+                            completedHeight += taskHeight;
+                            $(".todo").css("height", todoHeight);
+                            $(".completed").css("height", completedHeight);
+                            $(e.target).parent().appendTo(".completed");
+                            $(e.target).parent().addClass("notyet");
+                            $(e.target).parent().removeClass("yet");
+                        } else if ($(e.target).parent().hasClass("notyet")) {
+                            todoHeight += taskHeight;
+                            completedHeight -= taskHeight;
+                            $(".todo").css("height", todoHeight);
+                            $(".completed").css("height", completedHeight);
+                            $(e.target).parent().appendTo(".todo");
+                            $(e.target).parent().addClass("yet");
+                            $(e.target).parent().removeClass("notyet");
+                        }
+                        
+                    });
+                }
+
+            })
+            
+
+            
+            </script>
+    </div>
+</body>
+</html>

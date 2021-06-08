@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <!-- 다음 우편번호 서비스 파일 불러오기 -->
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <style>
+        input { outline-style: none; border: 0;}
+        .address-wrapper {
+            width: 30rem;
+            display: flex;
+            flex-direction: column;
+        }
+        .address-main,
+        .address-detail {
+            flex: 1;   
+            display: flex;
+            margin: 0.5rem;
+        }
+        .main-title,
+        .detail-title {
+            flex: 1;
+            border: 1px solid #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 3rem;
+            margin-right: 0.5rem;
+        }
+        .main-content,
+        .detail-content {
+            flex: 5;
+            border: 1px solid #000;
+            /* display: flex; */
+            justify-content: center;
+            align-items: center;
+            outline: none;
+            font-size: 1rem;
+        }
+        .detail-content {
+            padding-left: 2rem;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <div class="address-wrapper">
+        <div class="address-main">
+            <span class="main-title">주소</span>
+            <div class="main-content">주소를 입력해 주세요</div>
+        </div>
+        <div class="address-detail">
+            <span class="detail-title">상세주소</span>
+            <input class="detail-content" type="text" placeholder="상세주소를 입력해 주세요" />
+        </div>
+    </div>
+    <!-- <button onclick="searchAddress()">주소 검색하기</button> -->
+    <script>
+        $('.main-content').on('click', searchAddress);
+        function searchAddress() {
+            new daum.Postcode({
+                oncomplete: function(data) {
+                    // 소스파일 호출
+                    // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
+                    // 예제를 참고하여 다양한 활용법을 확인해 보세요.
+                    console.log("우편번호 : ", data.zonecode);
+                    console.log("기본주소 : ", data.address);
+                    $('.main-content').text(`(${data.zonecode}) ${data.address}`);
+                }
+            }).open();
+        }
+        
+    </script>
+</body>
+</html>

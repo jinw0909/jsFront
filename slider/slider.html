@@ -1,0 +1,58 @@
+<html>
+<head>
+    <title></title>
+    <style>
+        img {
+            width: 100%;
+        }
+        .text_wrapper {
+            position: absolute;
+            top: 0;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.5);
+            width: 10%;
+            height: 100%;
+            font-size: 18px;
+            text-align: center;
+            padding: 100px 0 ;
+            box-sizing: border-box;
+            font-weight: bold;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+
+    <script>
+        // bxslider 옵션
+        $(document).ready(function(){
+            // $(슬라이더요소).bxSlider({option});
+            // { auto: true, }
+            $('.slider').bxSlider({
+                auto: true,
+                speed: 500,
+                mode: 'fade',
+            });
+        });
+    </script>
+
+    </head>
+    <body>
+
+    <div class="slider">
+        <div>
+            <img src="https://png.pngtree.com/thumb_back/fw800/background/20190222/ourmid/pngtree-low-polygon-banner-background-polygonbannerbackgroundgradient-image_53804.jpg">
+            <div class="text_wrapper">글자 표시</div>
+        </div>
+        <div>
+            <img src="https://png.pngtree.com/thumb_back/fw800/background/20190222/ourmid/pngtree-low-polygon-geometric-banner-background-polygongeometricbannerbackground-image_53805.jpg">
+            <div class="text_wrapper">글자 표시</div>
+        </div>
+        <div>
+            <img src="https://image.freepik.com/free-vector/abstract-blue-geometric-banner-background_1035-18973.jpg">
+            <div class="text_wrapper">글자 표시</div>
+        </div>
+    </div>
+
+    </body>
+</html>

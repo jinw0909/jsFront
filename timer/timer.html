@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .timer-container {
+            width: 800px;
+            padding: 20px;
+            margin: 200px auto;
+            background: linear-gradient(to left,#b54747, #e36464);
+            text-align: center;
+            border-radius: 12px;
+        }
+        span {
+            display: inline-block;
+            margin-right: 20px;
+            padding: 10px;
+            width: 30%;
+            background-color: #f26d6d;
+            box-sizing: border-box;
+            border-radius: 10px;
+            font-size: 90px;
+            font-weight: 700;
+            color: #ffffff;
+            box-shadow: 8px 8px 8px 4px rgba(0, 0, 0, 0.2);
+        }
+        span:last-child {
+            margin-right: 0;
+        }
+
+    </style>
+    <!-- CDN(Contents Delivery Network) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <!-- jQuery -->
+    <script src="jquery.min.js"></script>
+    <script>
+        $(function() {
+            // 매개변수로 '시' 값을 받는다
+            function setTimer(duration) {
+                // 시간 > 초로 변환
+                // 24시간 86400초 (86400 / 24) 
+                let timer = duration * 3600;
+                let hours, minutes, seconds = 0;
+
+                // let test = '3';
+                // console.log(typeof test);
+                // console.log(typeof parseInt(test));
+
+                //setInterval(실행함수, 시간) : 지정한 시간 간격으로 함수 실행
+                let interval = setInterval(function() {
+                    // 1초 간격으로 일정하게 실행할 로직 작성
+
+                    // parseInt(반환할 값) : 문자열 데이터 타입을 정수 형태로 변환해주는 역할을 한다. (형변환)
+                    // parseInt(변환할 값, 10) : 십진수로 변환해라
+                    // pareFloat() : 소수점
+                    // 초 > 시간 변환
+                    hours = parseInt(timer / 3600, 10);
+
+                    // 초 > 분 변환
+                    minutes = parseInt(timer / 60 % 60, 10);
+
+                    // 0 > 59 > 60
+                    seconds = parseInt(timer % 60, 10);
+
+                    console.log(hours + '/' + minutes + '/' + seconds);
+                    
+                    //두자리로 변경
+                    if (hours < 10) {
+                        hours = "0" + hours;
+                    }
+                    if (minutes < 10) {
+                        minutes = "0" + minutes;
+                    }
+                    if (seconds < 10) {
+                        seconds = "0" + seconds;
+                    }
+
+
+                    // 각각의 요소에 맞는 html 요소에 넣어준다
+                    $("#hour").text(hours);
+                    $("#min").text(minutes);
+                    $("#sec").text(seconds);
+
+                    // timer 값이 변화
+                    // -- : 변수가 가진 값 - 1;
+                    // 타이머 로직의 작동 종료 조건
+                    // -1 씩 감소하다가 timer 값이 0 미만인 음수값이 도미ㅕㄴ 전역변수 timer의 값을 0으로 변경한다.
+                    if (--timer < 0) {
+                        timer = 0;
+                        clearInterval(interval);
+                    }
+                }, 1000);
+                
+            }
+
+            setTimer(24); // 시간 단위를 입력
+        })
+    </script>
+</head>
+<body>
+    <div class="timer-container">
+        <span id="hour">00</span>
+        <span id="min">00</span>
+        <span id="sec">00</span>
+    </div>
+</body>
+</html>
